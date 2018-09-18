@@ -1,12 +1,13 @@
 # library_symbols_demo
 .a/.so/bin symbol relations
 
-### 依赖关系
+### Demo依赖关系
 ```
 graph LR
 main        -->|dynamic|   libgame.so
 libgame.so  -->|static|    math.a
 math.a      -->|dynamic|   liblink.so
+bigmath.a   -->|static|    math.a
 ```
 
 ### 符号查询结果
