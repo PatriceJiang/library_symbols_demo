@@ -1,7 +1,6 @@
 
 #include "math.h"
 #include "link.h"
-
 int MATH_add(int a, int b)
 {
     LINK_say_hi();
