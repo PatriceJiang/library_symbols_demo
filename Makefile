@@ -9,8 +9,7 @@ math.a: math.c liblink.so
 	ar rcs $@ math.o
 
 libgame.so: math.a game.c liblink.so
-	gcc -shared -o $@ game.c math.a -L. -llink -fPIC -Wl,-rpath=. -ffunction-sections 
-
+	gcc -shared -o $@ game.c math.a -L. -llink -fPIC -Wl,-rpath=.
 bigmath.a: math.a bigmath.c
 	gcc -c -o bigmath.o bigmath.c 
 	ar rcs $@ bigmath.o 
@@ -23,4 +22,4 @@ clean:
 	rm -rf math.a libgame.so game.o math.o liblink.so
 
 
-#-Wl,--gc-sections #-fvisibility=hidden 	
+#-Wl,--gc-sections #-fvisibility=hidden 	 -ffunction-sections 
