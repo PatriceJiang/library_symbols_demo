@@ -16,13 +16,13 @@ bigmath.a   -->|static|    math.a
 ```
 #### 执行`make`
 ```bash
-gcc -shared -o liblink.so link.c -fPIC
-gcc -c -o math.o math.c -fPIC
-gcc -c -o mul.o mul.c -fPIC
+gcc -o liblink.so -shared link.c -fPIC
+gcc -o math.o -c math.c -fPIC
+gcc -o mul.o -c mul.c -fPIC
 ar rcs math.a math.o mul.o
-gcc -shared -o libgame.so game.c math.a -L. -llink -fPIC -Wl,-rpath=.
+gcc -o libgame.so -shared game.c math.a -L. -llink -fPIC -Wl,-rpath=.
 gcc -o main main.c -L. -lgame
-gcc -c -o bigmath.o bigmath.c
+gcc -o bigmath.o -c bigmath.c
 ar rcs bigmath.a bigmath.o
 ```
 
