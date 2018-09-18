@@ -21,28 +21,28 @@ target|depends|symbols of depends in target
 
 ### 符号查询结果
 
-`nm liblink.so`
+#### `nm liblink.so`
 ```
 00000000000006a0 T LINK_say_hi
 ```
 
-`nm math.a`
+#### `nm math.a`
 ```
                  U LINK_say_hi
 0000000000000000 T MATH_add
 0000000000000022 T MATH_sub_unused
 ```
-> **静态库** 使用 **动态库**, 作为外部符号`U`
+**静态库** 使用 **动态库**, 作为外部符号`U`
 
 
-`nm bigmath.a`
+#### `nm bigmath.a`
 ```
 0000000000000000 T BIGMATH_add_3
                  U MATH_add
 ```
-> **静态库** 使用 **静态库**, 也作为外部符号`U`
+**静态库** 使用 **静态库**, 也作为外部符号`U`
 
-`nm libgame.so`
+#### `nm libgame.so`
 ```
 0000000000000730 T GAME_do_calculate
 ....
@@ -50,9 +50,9 @@ target|depends|symbols of depends in target
 0000000000000760 T MATH_add
 0000000000000782 T MATH_sub_unused
 ```
-> **动态库** 使用 **静态库**,  会将代码导入 使用`T`
+**动态库** 使用 **静态库**,  会将代码导入 使用`T`
 
-`nm main`
+#### `nm main`
 ```
 00000000004006d6 T main
                  U MATH_sub_unused
