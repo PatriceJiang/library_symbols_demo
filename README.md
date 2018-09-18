@@ -22,6 +22,15 @@ math.a      -->|dynamic|   liblink.so
 0000000000000000 T MATH_add
 0000000000000022 T MATH_sub_unused
 ```
+> **静态库** 使用 **动态库**, 作为外部符号`U`
+
+
+`nm bigmath.a`
+```
+0000000000000000 T BIGMATH_add_3
+                 U MATH_add
+```
+> **静态库** 使用 **静态库**, 也作为外部符号`U`
 
 `nm libgame.so`
 ```
@@ -31,6 +40,7 @@ math.a      -->|dynamic|   liblink.so
 0000000000000760 T MATH_add
 0000000000000782 T MATH_sub_unused
 ```
+> **动态库** 使用 **静态库**,  会将代码导入 使用`T`
 
 `nm main`
 ```
