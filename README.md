@@ -1,13 +1,27 @@
 # library_symbols_demo
 .a/.so/bin symbol relations
 
+在开发过程中, 经常会混合使用**静态库**(`.a`) 和**动态库**(`.so`)进行编译
+
+这里通过实例对各种混合情形进行展示说明. 
+
 ### Demo依赖关系
 ```
 graph LR
-main        -->|dynamic|   libgame.so
-libgame.so  -->|static|    math.a
 math.a      -->|dynamic|   liblink.so
+libgame.so  -->|static|    math.a
+main        -->|dynamic|   libgame.so
 bigmath.a   -->|static|    math.a
+```
+#### 执行`make`
+```bash
+gcc -shared -o liblink.so link.c -fPIC
+gcc -c -o math.o math.c -fPIC
+ar rcs math.a math.o
+gcc -shared -o libgame.so game.c math.a -L. -llink -fPIC -Wl,-rpath=. -ffunction-sections
+gcc -o main main.c -L. -lgame
+gcc -c -o bigmath.o bigmath.c
+ar rcs bigmath.a bigmath.o
 ```
 
 ### 总结
