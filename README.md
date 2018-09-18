@@ -10,6 +10,15 @@ math.a      -->|dynamic|   liblink.so
 bigmath.a   -->|static|    math.a
 ```
 
+### 总结
+
+target|depends|symbols of depends in target
+------|-------|-----
+`.a`|`.so`|`U`
+`.a`|`.a`|`U`
+`.so`|`.a`|`T`
+`.so`|`.so`|`U`
+
 ### 符号查询结果
 
 `nm liblink.so`
