@@ -18,7 +18,7 @@ bigmath.a   -->|static|    math.a
 gcc -shared -o liblink.so link.c -fPIC
 gcc -c -o math.o math.c -fPIC
 ar rcs math.a math.o
-gcc -shared -o libgame.so game.c math.a -L. -llink -fPIC -Wl,-rpath=. -ffunction-sections
+gcc -shared -o libgame.so game.c math.a -L. -llink -fPIC -Wl,-rpath=. 
 gcc -o main main.c -L. -lgame
 gcc -c -o bigmath.o bigmath.c
 ar rcs bigmath.a bigmath.o
