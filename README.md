@@ -9,6 +9,7 @@
 ```
 graph LR
 math.a      -->|dynamic|   liblink.so
+math.a      -->|static|    mul.o math.o
 libgame.so  -->|static|    math.a
 main        -->|dynamic|   libgame.so
 bigmath.a   -->|static|    math.a
@@ -17,8 +18,9 @@ bigmath.a   -->|static|    math.a
 ```bash
 gcc -shared -o liblink.so link.c -fPIC
 gcc -c -o math.o math.c -fPIC
-ar rcs math.a math.o
-gcc -shared -o libgame.so game.c math.a -L. -llink -fPIC -Wl,-rpath=. 
+gcc -c -o mul.o mul.c -fPIC
+ar rcs math.a math.o mul.o
+gcc -shared -o libgame.so game.c math.a -L. -llink -fPIC -Wl,-rpath=.
 gcc -o main main.c -L. -lgame
 gcc -c -o bigmath.o bigmath.c
 ar rcs bigmath.a bigmath.o
@@ -41,15 +43,22 @@ target|depends|symbols of depends in target
 ```
 
 #### `nm math.a`
+> 依赖`liblink.so`
 ```
+math.a:
+                 U _GLOBAL_OFFSET_TABLE_
                  U LINK_say_hi
 0000000000000000 T MATH_add
 0000000000000022 T MATH_sub_unused
+
+mul.o:
+0000000000000000 T MUL_mul
 ```
 **静态库** 使用 **动态库**, 作为外部符号`U`
 
 
 #### `nm bigmath.a`
+> 依赖`math.a`
 ```
 0000000000000000 T BIGMATH_add_3
                  U MATH_add
@@ -57,9 +66,10 @@ target|depends|symbols of depends in target
 **静态库** 使用 **静态库**, 也作为外部符号`U`
 
 #### `nm libgame.so`
+> 依赖`math.a`,问题是这里没有导入`mul.a`中的符号
+ 
 ```
 0000000000000730 T GAME_do_calculate
-....
                  U LINK_say_hi
 0000000000000760 T MATH_add
 0000000000000782 T MATH_sub_unused
